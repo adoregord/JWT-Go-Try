@@ -2,7 +2,6 @@ package repository
 
 import (
 	"database/sql"
-	"fmt"
 	"jwt-try/internal/domain"
 	utils "jwt-try/internal/utils/hash"
 )
@@ -22,7 +21,7 @@ func NewUserRepo(db *sql.DB) UserRepoInterface {
 	}
 }
 
-func (repo UserRepo) CheckCredential(user *domain.User) bool{
+func (repo UserRepo) CheckCredential(user *domain.User) bool {
 	query := `
 	select password
 	from account a
@@ -32,7 +31,6 @@ func (repo UserRepo) CheckCredential(user *domain.User) bool{
 
 	err := repo.db.QueryRow(query, user.Username).Scan(&pass)
 	if err != nil {
-		fmt.Println("aaaaa", err)
 		return false
 	}
 
@@ -41,9 +39,9 @@ func (repo UserRepo) CheckCredential(user *domain.User) bool{
 	return ok
 }
 
-func (repo UserRepo) RegisterUser(User *domain.User) error{
+func (repo UserRepo) RegisterUser(User *domain.User) error {
 	query := `
-	insert into account (username, password)
+  insert into account (username, password)
 	values ($1, $2)
 	`
 	// encrypt the password
